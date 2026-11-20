@@ -1,6 +1,18 @@
 <script setup>
 import { ref } from 'vue'
 const menu = ref(false)
+const viewer = ref(null)
+const selected = ref(null)
+
+function openViewer(src, title, pdf = false) {
+  selected.value = { src, title, pdf }
+  viewer.value.showModal()
+}
+
+const photos = [
+  { src: './showcase.jpg', title: 'ผลงานเว็บไซต์และโครงการด้าน IT' },
+  { src: './award.jpg', title: 'ภาพกิจกรรมรับเกียรติบัตร' }
+]
 const nav = [['projects','ผลงาน'],['skills','ทักษะ'],['experience','ประสบการณ์'],['education','การศึกษา'],['activities','กิจกรรม'],['contact','ติดต่อ']]
 const skills = [
  ['Programming','SQL · PHP · C · C++ · C# · JavaScript · Python · Java · HTML · CSS · Dart'],
@@ -53,15 +65,28 @@ const certificates = [
     <section id="skills" class="group-section"><small>ทักษะ</small><h2>ความสามารถหลัก</h2><div class="grid2"><article v-for="[name,detail] in skills" :key="name" class="tile"><h3>{{name}}</h3><p>{{detail}}</p></article></div></section>
     <section id="projects" class="group-section"><small>ผลงาน</small><h2>ผลงานที่ภาคภูมิใจ</h2><article class="tile"><small>เว็บแอปพลิเคชัน</small><h3>ระบบจัดตารางเรียนอัตโนมัติด้วย CP-SAT</h3><p>ใช้ CP-SAT Solver จัดคาบเรียนภายใต้เงื่อนไขที่ซับซ้อน ช่วยลดคาบเรียนซ้ำซ้อน และลดเวลาในการจัดตารางสอน</p></article></section>
     <section id="education" class="group-section"><small>การศึกษา</small><h2>ประวัติการศึกษา</h2><div class="grid2"><article v-for="[level,school,field,gpa] in education" :key="level" class="tile"><h3>{{level}}</h3><p>{{school}} · {{field}}</p><em>GPA {{gpa}}</em></article></div></section>
-    <section id="activities" class="group-section"><small>กิจกรรม</small><h2>กิจกรรมและเกียรติบัตร</h2><div class="grid2"><figure class="photo"><img src="/showcase.jpg" loading="lazy" alt="บูธจัดแสดงผลงาน"><figcaption>ผลงานเว็บไซต์และโครงการด้าน IT</figcaption></figure><figure class="photo"><img src="/award.jpg" loading="lazy" alt="ภาพกิจกรรมรับเกียรติบัตร"><figcaption>ภาพกิจกรรมรับเกียรติบัตร</figcaption></figure>
-        <a v-for="cert in certificates" :key="cert.file" class="photo certificate" :href="'./certificates/' + cert.file">
+    <section id="activities" class="group-section"><small>กิจกรรม</small><h2>กิจกรรมและเกียรติบัตร</h2><div class="grid2"><button v-for="photo in photos" :key="photo.src" class="photo gallery-trigger" type="button" aria-haspopup="dialog" @click="openViewer(photo.src, photo.title)">
+          <img :src="photo.src" loading="lazy" alt=""><strong class="photo-title">{{ photo.title }}</strong>
+        </button>
+        <button v-for="cert in certificates" :key="cert.file" type="button" aria-haspopup="dialog" class="photo certificate gallery-trigger" @click="openViewer('./certificates/' + cert.file, cert.title, cert.file.endsWith('.pdf'))">
           <img :src="'./certificates/' + (cert.preview || cert.file)" loading="lazy" alt="">
-          <div class="caption"><strong>{{ cert.title }}</strong><p>{{ cert.detail }}</p><span>{{ cert.preview ? 'เปิด PDF' : 'ดูภาพเต็ม' }}</span></div>
-        </a>
+          <span class="caption"><strong>{{ cert.title }}</strong><span class="detail">{{ cert.detail }}</span><span class="view-label">{{ cert.preview ? 'เปิด PDF' : 'ดูภาพเต็ม' }}</span></span>
+        </button>
       </div>
     </section>
     <section id="contact" class="group-section"><small>ติดต่อ</small><h2>ช่องทางติดต่อ</h2><div class="grid2"><a class="tile" href="mailto:pserith009@gmail.com"><small>อีเมล</small><h3>pserith009@gmail.com</h3></a><a class="tile" href="tel:+66979681021"><small>โทรศัพท์</small><h3>097-968-1021</h3></a></div></section>
   </main>
   <footer>© อชิรวิชญ์ พวงพิลา</footer>
+  <dialog ref="viewer" class="viewer" aria-labelledby="viewer-title" @close="selected = null" @click="($event.target === viewer) && viewer.close()">
+    <div v-if="selected" class="viewer-panel">
+      <div class="viewer-head"><h2 id="viewer-title">{{ selected.title }}</h2><button type="button" autofocus @click="viewer.close()">ปิด ×</button></div>
+      <template v-if="selected.pdf">
+        <iframe :src="selected.src" :title="selected.title"></iframe>
+        <a :href="selected.src" download>ดาวน์โหลด PDF</a>
+      </template>
+      <img v-else :src="selected.src" :alt="selected.title">
+    </div>
+  </dialog>
 </template>
+
 
