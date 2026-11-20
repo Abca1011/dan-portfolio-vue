@@ -1,0 +1,23 @@
+<script setup>
+import { ref } from 'vue'
+const menu = ref(false)
+const nav = [['projects','ผลงาน'],['skills','ทักษะ'],['experience','ประสบการณ์'],['education','การศึกษา'],['contact','ติดต่อ']]
+const skills = [
+ ['Programming','SQL · PHP · C · C++ · C# · JavaScript · Python · Java · HTML · CSS · Dart'],
+ ['Design & multimedia','Photoshop · Illustrator · Canva · Premiere Pro · After Effects · CapCut'],
+ ['Network & IoT','ติดตั้งและตั้งค่า LAN/WLAN, Router, Switch และ Access Point ทดลองใช้ ESP32 เซนเซอร์ และ Servo Motor ในระบบให้อาหารสัตว์อัจฉริยะ'],
+ ['Application development','พัฒนาเว็บแอป ไฮบริดแอป และเนทีฟแอป ออกแบบฐานข้อมูล SQL และ NoSQL รวมถึงพัฒนาและทดสอบ API']
+]
+const education=[['ปวส.','วิทยาลัยเทคนิคเลย','เทคโนโลยีสารสนเทศ','3.92'],['ปวช.','วิทยาลัยเทคนิคเลย','เทคโนโลยีสารสนเทศ','3.95'],['มัธยมศึกษาตอนต้น','โรงเรียนบ้านปากปวน','ม.1 – 3','3.45'],['ประถมศึกษา','โรงเรียนบ้านปากปวน','ป.1 – 6','2.99']]
+</script>
+<template>
+<header><div class="wrap flex items-center justify-between"><a class="brand" href="#top" aria-label="Dan Portfolio หน้าหลัก"><b>✳</b> Dan<span> / Portfolio</span></a><button class="mobile" :aria-expanded="menu" aria-controls="nav" @click="menu=!menu">{{menu?'ปิดเมนู':'เมนู'}}</button><nav id="nav" :class="{open:menu}"><a v-for="[id,label] in nav" :key="id" :href="'#'+id" @click="menu=false">{{label}}</a></nav></div></header>
+<main id="top">
+<section class="hero"><div class="wrap hero-grid"><div><p class="tag"><i></i> INFORMATION TECHNOLOGY</p><h1>Portfol<span>io.</span></h1><h2>อชิรวิชญ์ พวงพิลา</h2><p class="intro">ผมชื่อแดน นักศึกษาเทคโนโลยีสารสนเทศ วิทยาลัยเทคนิคเลย<br>สนใจการพัฒนาเว็บแอปพลิเคชัน ระบบเครือข่าย และ IoT</p><a class="cta" href="#projects">ชมผลงาน</a></div><figure class="idcard"><div class="cardtop"><span>STUDENT PROFILE</span><b>IT</b></div><div class="portrait"><img src="/dan.jpg" alt="อชิรวิชญ์ พวงพิลา"></div><figcaption><strong>แดน</strong><span>LOEI TECHNICAL COLLEGE</span></figcaption></figure></div></section>
+<section id="projects" class="wrap blocksection"><div class="heading"><p class="tag">SELECTED WORK</p><h2>ผลงานที่ภาคภูมิใจ</h2></div><article class="project"><div class="diagram" aria-hidden="true"><div class="schedule"><div class="sheet-title">Timetable <b>CP-SAT</b></div><div class="days"><span v-for="d in ['MON','TUE','WED','THU','FRI']">{{d}}</span></div><div class="cells"><i v-for="i in 25" :class="{filled:[1,4,7,8,10,11,14,17,20,23,24].includes(i)}"></i></div></div></div><div class="project-copy"><p class="tag">WEB APPLICATION</p><h3>ระบบจัดตารางเรียน<br>อัตโนมัติด้วย CP-SAT</h3><p>ใช้ CP-SAT Solver จัดคาบเรียนภายใต้เงื่อนไขที่ซับซ้อน ช่วยลดคาบเรียนซ้ำซ้อน และลดเวลาในการจัดตารางสอน</p></div></article></section>
+<section id="skills" class="wrap blocksection"><div class="heading"><p class="tag">TOOLKIT</p><h2>ทักษะและเครื่องมือ</h2></div><div class="skillgrid"><article v-for="[name,detail] in skills"><h3>{{name}}</h3><p>{{detail}}</p></article></div></section>
+<div class="dark"><section id="experience" class="wrap blocksection"><div class="heading"><p class="tag">EXPERIENCE</p><h2>ประสบการณ์ฝึกงาน</h2></div><p class="company">บริษัท โทรคมนาคมแห่งชาติ จำกัด (มหาชน)</p><div class="skillgrid"><article><small>5 เดือน</small><h3>วิศวกรรมบริการ</h3><p>ตรวจสอบคุณภาพสัญญาณอินเทอร์เน็ต เดินสายและติดตั้งอุปกรณ์กระจายสัญญาณ ณ สถานที่ของลูกค้า พร้อมลงพื้นที่ตรวจเช็กและซ่อมบำรุงโครงข่าย</p></article><article><small>2 เดือน</small><h3>สื่อสารข้อมูล</h3><p>ติดตามสถานะวงจรสื่อสาร ตั้งค่าอุปกรณ์เครือข่าย ทดสอบความเร็วและเสถียรภาพก่อนส่งมอบ จัดทำผังเครือข่ายและบันทึกผลการแก้ไขปัญหา</p></article></div></section></div>
+<section id="education" class="wrap blocksection"><div class="heading"><p class="tag">EDUCATION</p><h2>ประวัติการศึกษา</h2></div><div v-for="[level,school,field,gpa] in education" class="edu"><b>{{level}}</b><p>{{school}}<small>{{field}}</small></p><span>GPA <strong>{{gpa}}</strong></span></div></section>
+<section class="wrap blocksection"><div class="heading"><p class="tag">ACTIVITIES</p><h2>กิจกรรมและเกียรติบัตร</h2></div><div class="activity"><div class="photos"><img src="/showcase.jpg" alt="นักศึกษาร่วมนำเสนอผลงานในบูธนิทรรศการ" loading="lazy"><img src="/award.jpg" alt="ภาพกิจกรรมรับเกียรติบัตร" loading="lazy"></div><ul class="list-disc pl-6 space-y-3"><li>ปฏิคม สาขาเทคโนโลยีสารสนเทศ ปีการศึกษา 2569</li><li>เกียรติบัตร TDGA / DGA</li><li>ผลงานเว็บไซต์และโครงการด้าน IT</li><li>การแข่งขันสร้างสื่อจาก AI</li></ul></div></section>
+</main><footer id="contact"><div class="wrap foot"><div><p class="tag">CONTACT</p><h2>ติดต่อแดน</h2></div><div><a href="mailto:pserith009@gmail.com">pserith009@gmail.com</a><a href="tel:+66979681021">097-968-1021</a></div></div></footer>
+</template>
