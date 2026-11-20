@@ -16,6 +16,12 @@ const stats = [
   ['skills', '4 ด้าน', 'ทักษะและความสามารถ', '⌘'],
   ['projects', 'CP-SAT', 'โครงการที่ภาคภูมิใจ', '▦']
 ]
+const certificates = [
+  { file: 'ai-award.jpg', title: 'ทักษะเทคโนโลยีปัญญาประดิษฐ์ ระดับ ปวส.', detail: 'รองชนะเลิศอันดับ 3 · มาตรฐานระดับเหรียญเงิน' },
+  { file: 'nt-internship.jpg', title: 'ฝึกประสบการณ์วิชาชีพกับ NT', detail: 'ส่วนขายและบริการลูกค้าเลย · พ.ศ. 2567' },
+  { file: 'cyber-cadet.jpg', title: 'ปฏิบัติหน้าที่ รด.ไซเบอร์', detail: 'มณฑลทหารบกที่ 28 · พ.ศ. 2566' },
+  { file: 'achirawit.pdf', preview: 'pdf-preview.jpg', title: 'Cabling Contest Training #13', detail: 'เกียรติบัตรเข้าร่วมการอบรม' }
+]
 </script>
 <template>
   <header class="flex items-center justify-between">
@@ -47,8 +53,15 @@ const stats = [
     <section id="skills" class="group-section"><small>ทักษะ</small><h2>ความสามารถหลัก</h2><div class="grid2"><article v-for="[name,detail] in skills" :key="name" class="tile"><h3>{{name}}</h3><p>{{detail}}</p></article></div></section>
     <section id="projects" class="group-section"><small>ผลงาน</small><h2>ผลงานที่ภาคภูมิใจ</h2><article class="tile"><small>เว็บแอปพลิเคชัน</small><h3>ระบบจัดตารางเรียนอัตโนมัติด้วย CP-SAT</h3><p>ใช้ CP-SAT Solver จัดคาบเรียนภายใต้เงื่อนไขที่ซับซ้อน ช่วยลดคาบเรียนซ้ำซ้อน และลดเวลาในการจัดตารางสอน</p></article></section>
     <section id="education" class="group-section"><small>การศึกษา</small><h2>ประวัติการศึกษา</h2><div class="grid2"><article v-for="[level,school,field,gpa] in education" :key="level" class="tile"><h3>{{level}}</h3><p>{{school}} · {{field}}</p><em>GPA {{gpa}}</em></article></div></section>
-    <section id="activities" class="group-section"><small>กิจกรรม</small><h2>กิจกรรมและเกียรติบัตร</h2><div class="grid2"><figure class="photo"><img src="/showcase.jpg" loading="lazy" alt="บูธจัดแสดงผลงาน"><figcaption>ผลงานเว็บไซต์และโครงการด้าน IT</figcaption></figure><figure class="photo"><img src="/award.jpg" loading="lazy" alt="ภาพกิจกรรมรับเกียรติบัตร"><figcaption>ภาพกิจกรรมรับเกียรติบัตร</figcaption></figure></div><article class="tile mt-3"><ul class="list-disc pl-5"><li>ปฏิคม สาขาเทคโนโลยีสารสนเทศ ปีการศึกษา 2569</li><li>เกียรติบัตร TDGA / DGA</li><li>การแข่งขันสร้างสื่อจาก AI</li></ul></article></section>
+    <section id="activities" class="group-section"><small>กิจกรรม</small><h2>กิจกรรมและเกียรติบัตร</h2><div class="grid2"><figure class="photo"><img src="/showcase.jpg" loading="lazy" alt="บูธจัดแสดงผลงาน"><figcaption>ผลงานเว็บไซต์และโครงการด้าน IT</figcaption></figure><figure class="photo"><img src="/award.jpg" loading="lazy" alt="ภาพกิจกรรมรับเกียรติบัตร"><figcaption>ภาพกิจกรรมรับเกียรติบัตร</figcaption></figure>
+        <a v-for="cert in certificates" :key="cert.file" class="photo certificate" :href="'./certificates/' + cert.file">
+          <img :src="'./certificates/' + (cert.preview || cert.file)" loading="lazy" alt="">
+          <div class="caption"><strong>{{ cert.title }}</strong><p>{{ cert.detail }}</p><span>{{ cert.preview ? 'เปิด PDF' : 'ดูภาพเต็ม' }}</span></div>
+        </a>
+      </div>
+    </section>
     <section id="contact" class="group-section"><small>ติดต่อ</small><h2>ช่องทางติดต่อ</h2><div class="grid2"><a class="tile" href="mailto:pserith009@gmail.com"><small>อีเมล</small><h3>pserith009@gmail.com</h3></a><a class="tile" href="tel:+66979681021"><small>โทรศัพท์</small><h3>097-968-1021</h3></a></div></section>
   </main>
   <footer>© อชิรวิชญ์ พวงพิลา</footer>
 </template>
+
