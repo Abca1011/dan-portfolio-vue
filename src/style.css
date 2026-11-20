@@ -88,3 +88,24 @@ body:has(.viewer[open]) { overflow: hidden; }
 .viewer img { display: block; width: auto; height: auto; max-height: 73dvh; max-width: min(87vw,1100px); margin: auto; object-fit: contain; }
 .viewer iframe { display: block; width: min(85vw,900px); height: 65dvh; border: 0; }
 .viewer-panel > a { display: inline-block; color: #165bbd; margin-top: 8px; text-decoration: underline; }
+.skill-card {
+  --accent: #6245a9;
+  --tint: #f2edfb;
+  background: white;
+  border: 1px solid #dce2e9;
+  border-radius: 18px;
+  padding: clamp(16px, 3vw, 22px);
+  box-shadow: 0 4px 14px #1e293b08;
+}
+.skill-card.design { --accent: #9a481f; --tint: #fff1e8; }
+.skill-card.network { --accent: #176e69; --tint: #e6f5f2; }
+.skill-card.apps { --accent: #325ea2; --tint: #eaf1fc; }
+.skill-heading { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.skill-heading h3 { margin: 0; line-height: 1.4; }
+.skill-icon { display: grid; place-items: center; flex: none; width: 40px; height: 40px; border-radius: 12px; background: var(--tint); color: var(--accent); }
+.skill-icon svg { width: 22px; height: 22px; }
+.skill-tools { display: flex; flex-wrap: wrap; gap: 7px; }
+.skill-tools li { padding: 3px 10px; border-radius: 7px; background: var(--tint); color: var(--accent); font-size: .91rem; font-weight: 500; }
+.skill-tasks { padding-inline-start: 1.15em; list-style: disc; color: #404d5d; }
+.skill-tasks li + li { margin-top: 8px; }
+.skill-tasks li::marker { color: var(--accent); }

@@ -15,10 +15,22 @@ const photos = [
 ]
 const nav = [['projects','ผลงาน'],['skills','ทักษะ'],['experience','ประสบการณ์'],['education','การศึกษา'],['activities','กิจกรรม'],['contact','ติดต่อ']]
 const skills = [
- ['Programming','SQL · PHP · C · C++ · C# · JavaScript · Python · Java · HTML · CSS · Dart'],
- ['Design & multimedia','Photoshop · Illustrator · Canva · Premiere Pro · After Effects · CapCut'],
- ['Network & IoT','ติดตั้งและตั้งค่า LAN/WLAN, Router, Switch และ Access Point ทดลองใช้ ESP32 เซนเซอร์ และ Servo Motor ในระบบให้อาหารสัตว์อัจฉริยะ'],
- ['Application development','พัฒนาเว็บแอป ไฮบริดแอป และเนทีฟแอป ออกแบบฐานข้อมูล SQL และ NoSQL รวมถึงพัฒนาและทดสอบ API']
+  {
+    name: 'การเขียนโปรแกรม', category: 'code', icon: 'M8 7l-5 5 5 5m8-10 5 5-5 5m-3-14-2 18',
+    tools: ['SQL','PHP','C','C++','C#','JavaScript','Python','Java','HTML','CSS','Dart']
+  },
+  {
+    name: 'ออกแบบและมัลติมีเดีย', category: 'design', icon: 'M4 20l4-1 12-12-3-3L5 16l-1 4zm10-13 3 3',
+    tools: ['Photoshop','Illustrator','Canva','Premiere Pro','After Effects','CapCut']
+  },
+  {
+    name: 'เครือข่ายและ IoT', category: 'network', icon: 'M9 3h6v5H9zM2 16h7v5H2zm13 0h7v5h-7zm-3-8v4m-7 4v-4h14v4',
+    tasks: ['ติดตั้งและตั้งค่าเครือข่าย LAN/WLAN รวมถึง Router, Switch และ Access Point','ทดลองใช้ ESP32 เซนเซอร์ และ Servo Motor ในระบบให้อาหารสัตว์อัจฉริยะ']
+  },
+  {
+    name: 'การพัฒนาแอปพลิเคชัน', category: 'apps', icon: 'M2 4h15v12H2zM4 20h9m3-11h6v12h-6z',
+    tasks: ['พัฒนาเว็บแอป ไฮบริดแอป และเนทีฟแอป','ออกแบบและจัดการฐานข้อมูล SQL และ NoSQL','พัฒนาและทดสอบ API']
+  }
 ]
 const education=[['ปวส.','วิทยาลัยเทคนิคเลย','เทคโนโลยีสารสนเทศ','3.92'],['ปวช.','วิทยาลัยเทคนิคเลย','เทคโนโลยีสารสนเทศ','3.95'],['มัธยมศึกษาตอนต้น','โรงเรียนบ้านปากปวน','ม.1 – 3','3.45'],['ประถมศึกษา','โรงเรียนบ้านปากปวน','ป.1 – 6','2.99']]
 
@@ -62,7 +74,19 @@ const certificates = [
       <article class="tile"><small>บริษัท โทรคมนาคมแห่งชาติ จำกัด (มหาชน)</small><h3>วิศวกรรมบริการ <em>5 เดือน</em></h3><p>ตรวจสอบคุณภาพสัญญาณอินเทอร์เน็ต เดินสายและติดตั้งอุปกรณ์กระจายสัญญาณ ณ สถานที่ของลูกค้า พร้อมลงพื้นที่ตรวจเช็กและซ่อมบำรุงโครงข่าย</p></article>
       <article class="tile"><small>บริษัท โทรคมนาคมแห่งชาติ จำกัด (มหาชน)</small><h3>สื่อสารข้อมูล <em>2 เดือน</em></h3><p>ติดตามสถานะวงจรสื่อสาร ตั้งค่าอุปกรณ์เครือข่าย ทดสอบความเร็วและเสถียรภาพก่อนส่งมอบ จัดทำผังเครือข่ายและบันทึกผลการแก้ไขปัญหา</p></article>
     </section>
-    <section id="skills" class="group-section"><small>ทักษะ</small><h2>ความสามารถหลัก</h2><div class="grid2"><article v-for="[name,detail] in skills" :key="name" class="tile"><h3>{{name}}</h3><p>{{detail}}</p></article></div></section>
+    <section id="skills" class="group-section">
+      <small>ทักษะ</small><h2>ความสามารถหลัก</h2>
+      <div class="grid2">
+        <article v-for="skill in skills" :key="skill.category" class="skill-card" :class="skill.category">
+          <div class="skill-heading">
+            <span class="skill-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path :d="skill.icon"/></svg></span>
+            <h3>{{ skill.name }}</h3>
+          </div>
+          <ul v-if="skill.tools" class="skill-tools"><li v-for="tool in skill.tools" :key="tool">{{ tool }}</li></ul>
+          <ul v-else class="skill-tasks"><li v-for="task in skill.tasks" :key="task">{{ task }}</li></ul>
+        </article>
+      </div>
+    </section>
     <section id="projects" class="group-section"><small>ผลงาน</small><h2>ผลงานที่ภาคภูมิใจ</h2><article class="tile"><small>เว็บแอปพลิเคชัน</small><h3>ระบบจัดตารางเรียนอัตโนมัติด้วย CP-SAT</h3><p>ใช้ CP-SAT Solver จัดคาบเรียนภายใต้เงื่อนไขที่ซับซ้อน ช่วยลดคาบเรียนซ้ำซ้อน และลดเวลาในการจัดตารางสอน</p></article></section>
     <section id="education" class="group-section"><small>การศึกษา</small><h2>ประวัติการศึกษา</h2><div class="grid2"><article v-for="[level,school,field,gpa] in education" :key="level" class="tile"><h3>{{level}}</h3><p>{{school}} · {{field}}</p><em>GPA {{gpa}}</em></article></div></section>
     <section id="activities" class="group-section"><small>กิจกรรม</small><h2>กิจกรรมและเกียรติบัตร</h2><div class="grid2"><button v-for="photo in photos" :key="photo.src" class="photo gallery-trigger" type="button" aria-haspopup="dialog" @click="openViewer(photo.src, photo.title)">
@@ -88,5 +112,6 @@ const certificates = [
     </div>
   </dialog>
 </template>
+
 
 
